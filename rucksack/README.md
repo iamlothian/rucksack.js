@@ -1,32 +1,36 @@
 ﻿
-# Matthew Lothian @ Autumn01 2013/12/20 #
-#        Rucksack.js 0.0.1 (Alpha)      #
+# Matthew Lothian @ Autumn01 2013/12/20
+##        Rucksack.js 0.0.1 (Alpha) 
 
 
-MileStones / Features:
+### MileStones / Features:
+  - [x] Modular
+  - [x] Factory constructor
+  - [x] Service constructor
+  - [x] Lazzy loading
+  - [x] Easy error logging
+  - [x] Namespaces
+  - [x] Sealable modules and namespaces
+  - [x] Global await event for single module
+  - [x] Global await event for multipul modules
+  - [x] Make interface for optional config object
+  - [x] Build optional strict interface checks for injection
 
-* [x] Modular
-* [x] Factory constructor
-* [x] Service constructor
-* [x] Lazzy loading
-* [x] Easy error logging
-* [x] Namespaces
-* [x] Sealable modules and namespaces
-* [x] Global await event for single module
-* [x] Global await event for multipul modules
-* [x] Make interface for optional config object
-* [x] Build optional strict interface checks for injection
- 
-TODO / Wishlist  
+### TODO / Wishlist 
 
-* [ ] Global await event for one or more namespaces
-* [ ] extension of existing public modules (inheritence)
-* [ ] Load external js file with callback
+  - [x] NOTHING
+
+### Considering / Ideas
+
+  - [ ] Global await event for one or more namespaces
+  - [ ] extension of existing public modules (inheritence)
+  - [ ] Load external js file with callback
 
 ___
 # Getting Started #
 ___
-  ### $namespace ### 
+### $namespace 
+
     namespace : $rucksack.$namespace(String:NAME[, Object:OPTIONS]);
   
   EG:
@@ -34,18 +38,24 @@ ___
     var MyNamespace = $rucksack.$namespace("MyNamespace", { sealed : true });
   
   Description: $namespace is how you interface with and organize your rucksack modules.
+  
+### $lock
+  
+  Locks the rucksack environment so that it can not be accessed after this statment has been run
+
+    $rucksack.$lock();
 ___ 
 # Modules #
 ___  
-  ### $service ###
+### $service
   
   module with a static like intent, built around the this object 
   
     void : $namespace.$service(String:NAME, [String:DEPENDENCY_KEY, ..., Function(D1, ...){
-      this.property = SomeValue
-    }] [, Object:OPTIONS] ) 
+        this.property = SomeValue
+    }] [, Object:OPTIONS] )
   
-  ### $factory ### 
+### $factory
   
   a module with an instanciable like intent, built around the return object
   
@@ -69,14 +79,13 @@ ___
     App.$service("App:m1", ["MyNamespace:m1", "MyNamespace:m2", function(m1, m2){
       this.response = "App:m1 with " + new m1("hello").response + m2.response;
     }], { sealed : true });
-    
-    
+
   
   Description: $service and $factory are how you add / inject your code into modules.
   
   NOTE: Name can be provided as "m1" but will be converted to "MyNamespace:m1" for you
   
-  ### $interface ### 
+### $interface
   
   a module with an abstract like intent, used to describe and validate the expected properties injected modules.
   
@@ -89,7 +98,7 @@ ___
        response: ["string"]
       ,foobar: ["function", ["arg1", "arg2", "arg3"]]
     });
-    
+
   this may be used like so
     
     App.$service("App:m1", ["MyNamespace:m1 as MyNamespace:i1", "MyNamespace:m2 as MyNamespace:i2", function(m1, m2){
@@ -98,7 +107,7 @@ ___
   
   The $constructor property is used to build a dumby instace of a module that requires constructing
   
-  ### $await ###
+### $await
   
   a listener module intended to be used to wait for dependencies to be resolved before use
   unlike other modules no constructor is compiled, only a true value if the await is resolved
@@ -106,8 +115,8 @@ ___
     $rucksack.$await("AppReady", ['App:m1', function(m1){
       ...
     }]);
-    
-  ### $describe ###
+
+### $describe
   
   also available as an option on a module. Describe is intended as an 
   option methoud of internal documentation for debugging and describing you modules
@@ -121,14 +130,23 @@ ___
         response : "type: string, A response property"
       }
     });
-    
+
   OR
   
     MyNamespace.$describe("MyNamespace:m2", {
       response : "type: string, A response property"
     });
-    
+
   Get:
     
     console.log(MyNamespace.$describe("MyNamespace:m2"));
+
+### $freeze
   
+  freezes the state of this namespace and stops additions
+  
+    MyNamespace.$freeze();
+  
+
+
+

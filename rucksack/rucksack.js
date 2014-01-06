@@ -1,10 +1,14 @@
-﻿var
+﻿
+var
  $RSConfig = !!$RSConfig ? $RSConfig : {}
-,$rucksack = $rucksack || (function (config) {
-    'use strict';
+, $rucksack = $rucksack || (function (config) {
+
+    "use strict";
+
     var
      DEBUG = config.DEBUG || false
     , ERROR_CALLBACK = config.ERROR_CALLBACK || null
+    , LOCKED = false
     , _namespaces = {}
     , _modules = {}
     , _linkQueue = {}
@@ -226,6 +230,9 @@
 
         if (DEBUG) console.log("Registered: ", this);
 
+        if (LOCKED)
+            throw new Error("Register Exception: rucksack has been locked and can not be altered");
+
         if (_moduleState(_modules[this.key]) != "undefined")
             throw new Error("Register Exception: [" + this.key + "] has already been registered and can not be redefined");
 
@@ -336,6 +343,9 @@
     , _await = function (name, constructor) {
         _awaitQueue.$await(name, constructor);
     }
+    , _lock = function () {
+        LOCKED = true;
+    }
 
     // rucksack namespace interface
     , _namespace = function (namespace, options) {
@@ -404,7 +414,7 @@
             return _public;
         }
         // -------------------------------------------------------
-        // a module with an insatiable like intent, built around the return object 
+        // a module with an instanciable like intent, built around the return object 
         // -------------------------------------------------------
         // Injectable
         , _factory = function (module_key, constructor, options) {
@@ -467,7 +477,9 @@
                 // TODO: show all descriptions for name space
             }
         }
-
+        // -------------------------------------------------------
+        // freezes the state of this namespace and stops additions
+        // -------------------------------------------------------
         , _freeze = function () {
             _namespaces[namespace]._options.frozen = true;
         }
@@ -489,6 +501,7 @@
     , _public = {
         $namespace: _namespace
       , $await: _await
+      , $lock: _lock
     };
 
     return _public;

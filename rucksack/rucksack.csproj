@@ -60,7 +60,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Index.html" />
     <Content Include="README.html">
       <DependentUpon>README.md</DependentUpon>
     </Content>

@@ -1,13 +1,26 @@
-﻿/// <reference path="../rucksack/rucksack.js" />
+﻿/// <reference path="rucksack.js" />
 
-describe("$RSConfig", function () {
-    it("exists", function () {
-        expect($RSConfig).toBeDefined();
+describe("A suite", function () {
+    it("contains spec with an expectation", function () {
+        expect(true).toBe(true);
     });
 });
 
 describe("$rucksack", function () {
     it("exists", function () {
-        expect($rucksack).toBeDefined();
+        expect(!!$rucksack).toBe(true);
+    });
+});
+
+describe("$rucksack.$namespace(\"APP\")", function () {
+
+    var app = $rucksack.$namespace("APP");
+
+    it("created", function () {
+        expect(!!app).toBe(true);
+    });
+    it("can't be created twice", function () {
+        var error = function () { $rucksack.$namespace("APP"); }
+        expect(error).toThrow();
     });
 });
