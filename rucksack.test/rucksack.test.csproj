@@ -7,12 +7,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2DF24864-DB3D-4631-A50B-4C8CD1F36146}</ProjectGuid>
+    <ProjectGuid>{CBEEDA48-A671-4F7A-B0E3-0E3B15EC81F1}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>rucksack</RootNamespace>
-    <AssemblyName>rucksack</AssemblyName>
+    <RootNamespace>rucksack.test</RootNamespace>
+    <AssemblyName>rucksack.test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -63,7 +63,7 @@
     <Content Include="README.html">
       <DependentUpon>README.md</DependentUpon>
     </Content>
-    <Content Include="rucksack.js" />
+    <Content Include="rucksack.test.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
@@ -81,9 +81,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>62502</DevelopmentServerPort>
+          <DevelopmentServerPort>62863</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62502/</IISUrl>
+          <IISUrl>http://localhost:62863/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
