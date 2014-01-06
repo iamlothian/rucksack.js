@@ -1,10 +1,7 @@
-﻿// Code goes here
-"use strict";
-
-var
+﻿var
  $RSConfig = !!$RSConfig ? $RSConfig : {}
 ,$rucksack = $rucksack || (function (config) {
-
+    'use strict';
     var
      DEBUG = config.DEBUG || false
     , ERROR_CALLBACK = config.ERROR_CALLBACK || null
@@ -37,14 +34,14 @@ var
         else if (!!module) state = "compiled";
         return state;
     }
-    // validate module key and prepend namespace if needed
+    // validate module key and perpend namespace if needed
     , _namespaceKey = function (namespace, key) {
         if (!_KEY_REGEX.test(key))
             throw new Error(" Invalid module Key [" + key + "] must regex " + _KEY_REGEX.toString());
 
         return key.indexOf(namespace) === 0 ? key : (namespace + ':' + key);
     }
-    // break appart dependency list into its usable parts
+    // break apart dependency list into its usable parts
     , _proccessDependencies = function (constructor) {
 
         var
@@ -111,13 +108,13 @@ var
           , links = module.dependencies.link_keys
           , interfaces = module.dependencies.link_interfaces
           , NotFoundError = (function (key) {
-              throw new Error("Resolve Exeption: Module \"" + links[key] + "\" not found");
+              throw new Error("Resolve Exception: Module \"" + links[key] + "\" not found");
           });
 
         for (var key in links) {
             var link_module = _modules[links[key]];
 
-            // get compiled moduled to inject into this module
+            // get compiled modules to inject into this module
             link_module = _moduleState(link_module) == "compiled" ? link_module : new NotFoundError(key);
 
             // does dependency require an interface
@@ -159,13 +156,13 @@ var
 
         if (DEBUG) console.log("Assert Interface:", module_key, module, "AS", interface_key, thisInterface);
 
-        // check module is no a function contructor
+        // check module is no a function constructor
         if (_getObjectType(module) == "function") {
             if (!!thisInterface.$constructor) {
                 module = _validateFunctionArgs(module, thisInterface.$constructor);
             } else {
-                throw new Error("Interface Exeption: No $constructor definition found for constructor function. Interface [" + interface_key + "] can not be applied to module [" + module_key +
-                "] becasue moudle needs to be instanced by the constructor \"new " + module_key + "(" + module.toString().match(_FUNCTION_ARGS_REGEX)[1] + ")\"");
+                throw new Error("Interface Exception: No $constructor definition found for constructor function. Interface [" + interface_key + "] can not be applied to module [" + module_key +
+                "] because module needs to be instanced by the constructor \"new " + module_key + "(" + module.toString().match(_FUNCTION_ARGS_REGEX)[1] + ")\"");
             }
 
         }
@@ -182,7 +179,7 @@ var
                     case "boolean":
                     case "array":
                         if (thisInterface[prop][0] != type)
-                            throw new Error("Interface Exeption: Module [" + module_key + "] must implament property ["
+                            throw new Error("Interface Exception: Module [" + module_key + "] must implement property ["
                             + prop + " : " + thisInterface[prop] + "] of interface [" + interface_key + "] "
                             + "Expected type \"" + thisInterface[prop][0] + "\" but found type \"" + type + "\"");
                         break;
@@ -193,12 +190,12 @@ var
                             if (!isNaN(parseFloat(result)) && isFinite(result)) {
                                 result = result - 1;
                                 throw new Error(
-                                  "Interface Exeption: function argument mismatch in property " + prop +
+                                  "Interface Exception: function argument mismatch in property " + prop +
                                   ". Expected \"" + thisInterface[prop][1][result] + "\" but found \"" + _getFunctionArgs(module[prop])
                                   + "\" in \"" + prop + " : " + module[prop] + "\"");
                             }
                         } else {
-                            throw new Error("Interface Exeption: Module [" + module_key + "] must implament property ["
+                            throw new Error("Interface Exception: Module [" + module_key + "] must implement property ["
                               + prop + " : " + thisInterface[prop] + "] of interface [" + interface_key + "] "
                               + "Expected type \"" + thisInterface[prop][0] + "\" but found type \"" + type + "\"");
                         }
@@ -206,7 +203,7 @@ var
                 }
 
             } else {
-                throw new Error("Interface Exeption: Module [" + module_key + "] must implament property ["
+                throw new Error("Interface Exception: Module [" + module_key + "] must implement property ["
                  + "(" + thisInterface[prop][0] + ") " + prop + " : " + thisInterface[prop] + "] of interface [" + interface_key + "]");
             }
         }
@@ -224,13 +221,13 @@ var
           , builder: constructor[constructor.length - 1]
         };
     }
-    // lifecycle
+    // life cycle
     , _register = function () {
 
         if (DEBUG) console.log("Registered: ", this);
 
         if (_moduleState(_modules[this.key]) != "undefined")
-            throw new Error("Register Exception: [" + this.key + "] has alreay been registered and can not be redefined");
+            throw new Error("Register Exception: [" + this.key + "] has already been registered and can not be redefined");
 
         _modules[this.key] = this;
 
@@ -319,10 +316,10 @@ var
             // can link
             if (_canLink(module_key, listener)) {
 
-                // acount dependency as available to module
+                // account dependency as available to module
                 _modules[listener].dependencies.link_count++;
 
-                // if all modules dependencies have been acounted for compile it
+                // if all modules dependencies have been accounted for compile it
                 if (_canCompile(_modules[listener])) _compile(listener);
 
                 //successfullLinks.push(listener, _moduleState(_modules[listener]));
@@ -346,7 +343,7 @@ var
         if (DEBUG) console.log("Add namespace: ", namespace, options);
 
         if (!!_namespaces[namespace])
-            throw new Error("Namespace Exeption: The namespace [" + namespace + "] has already been defined");
+            throw new Error("Namespace Exception: The namespace [" + namespace + "] has already been defined");
 
         _namespaces[namespace] = { _options: options || {} };
 
@@ -362,7 +359,7 @@ var
             try {
 
                 if (!!_namespaces[namespace]._options.frozen)
-                    throw new Error("Namespace Exeption: The namespace [" + namespace + "] has been frozen and can not be added to");
+                    throw new Error("Namespace Exception: The namespace [" + namespace + "] has been frozen and can not be added to");
 
                 me = _constructorParts(namespace, constructor, type, module_key);
                 _namespaces[namespace][me.key] = options || {};
@@ -407,7 +404,7 @@ var
             return _public;
         }
         // -------------------------------------------------------
-        // a module with an instanciable like intent, built around the return object 
+        // a module with an insatiable like intent, built around the return object 
         // -------------------------------------------------------
         // Injectable
         , _factory = function (module_key, constructor, options) {
@@ -432,12 +429,12 @@ var
             _proccess(_awaitNameSpace, module_key, constructor, "await", options);
         }
         // -------------------------------------------------------
-        // DEPRICATED: Not usefule, mostly falls outside the lifecycle of the rucksack framework
+        // DEPRICATED: Not useful, mostly falls outside the life cycle of the rucksack framework
         // -------------------------------------------------------
         , _tryGet = function (module_key) {
 
             if (!!!_namespaces[namespace][module_key])
-                throw new Error("Reference Exeption: Module [" + module_key + "] is not found in namespace [" + namespace + "]");
+                throw new Error("Reference Exception: Module [" + module_key + "] is not found in namespace [" + namespace + "]");
 
             var
              module = _modules[module_key]
@@ -445,7 +442,7 @@ var
 
             switch (_moduleState(module)) {
                 case "undefined":
-                    throw new Error("Reference Exeption: Module [" + module_key + "] is not yet defined");
+                    throw new Error("Reference Exception: Module [" + module_key + "] is not yet defined");
                 case "linking":
                     result = _resolve(module);
                     break;
@@ -459,7 +456,7 @@ var
         }
         // -------------------------------------------------------
         // also available as an option on a module. Describe is intended as an 
-        // option methoud of internal documentation for debugging and describing you modules
+        // option method of internal documentation for debugging and describing you modules
         // -------------------------------------------------------
         , _describe = function (module_key, description) {
             if (!!module_key) {
