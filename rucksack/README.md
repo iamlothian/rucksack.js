@@ -4,23 +4,24 @@
 
 
 MileStones / Features:
-  - [x] Modular
-  - [x] Factory constructor
-  - [x] Service constructor
-  - [x] Lazzy loading
-  - [x] Easy error logging
-  - [x] Namespaces
-  - [x] Sealable modules and namespaces
-  - [x] Global await event for single module
-  - [x] Global await event for multipul modules
-  - [x] Make interface for optional config object
-  - [x] Build optional strict interface checks for injection
+
+* [x] Modular
+* [x] Factory constructor
+* [x] Service constructor
+* [x] Lazzy loading
+* [x] Easy error logging
+* [x] Namespaces
+* [x] Sealable modules and namespaces
+* [x] Global await event for single module
+* [x] Global await event for multipul modules
+* [x] Make interface for optional config object
+* [x] Build optional strict interface checks for injection
  
 TODO / Wishlist  
 
-  - [ ] Global await event for one or more namespaces
-  - [ ] extension of existing public modules (inheritence)
-  - [ ] Load external js file with callback
+* [ ] Global await event for one or more namespaces
+* [ ] extension of existing public modules (inheritence)
+* [ ] Load external js file with callback
 
 ___
 # Getting Started #
