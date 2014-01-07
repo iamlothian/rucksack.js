@@ -29,6 +29,18 @@
 ___
 # Getting Started #
 ___
+
+### $RSConfig
+
+  Include this code before rucksack.js to inject these config options
+
+    var $RSConfig = { 
+      DEBUG: true,
+      ERROR_CALLBACK: function(error){
+        console.log("LOG ERROR", error);
+      }
+    }
+
 ### $namespace 
 
     namespace : $rucksack.$namespace(String:NAME[, Object:OPTIONS]);
