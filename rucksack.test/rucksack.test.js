@@ -1,4 +1,4 @@
-﻿/// <reference path="../rucksack/rucksack.js" />
+﻿/// <reference path="../rucksack/rucksack.min.js" />
 
 describe("$rucksack", function () {
     it("exists", function () {
@@ -17,4 +17,6 @@ describe("$rucksack.$namespace(\"APP\")", function () {
         var error = function () { $rucksack.$namespace("APP"); }
         expect(error).toThrow();
     });
+
+
 });

@@ -64,9 +64,17 @@
       <DependentUpon>README.md</DependentUpon>
     </Content>
     <Content Include="rucksack.js" />
+    <Content Include="rucksack.min.js">
+      <DependentUpon>rucksack.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="rucksack.min.js.map">
+      <DependentUpon>rucksack.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
