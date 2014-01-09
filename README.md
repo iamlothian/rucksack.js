@@ -8,7 +8,7 @@ The test project is set up to run using:
 
 * http://chutzpah.codeplex.com/
 * http://pivotal.github.io/jasmine/
-* 
+
 ## What is it?
 
 Rucksack.js a light weight vanilla js framework for building modular js code using lazy loaded dependency injection. 
