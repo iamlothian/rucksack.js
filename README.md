@@ -21,3 +21,8 @@ Still early stages:
 The idea is to have a loose modular dependency system that does not rely on your modules being defined in any order, and will compile and resolve when all their dependencies are available. While easily facilitating the option for stricter control and accessibility between dependencies and modules that might depend on them.
 This provides a loosely coupled module system that is easy to maintain and distribute.
 
+And it's small. just ~6kb when minified
+
+### documentation:
+
+https://github.com/iamlothian/rucksack.js/blob/master/rucksack/README.md
