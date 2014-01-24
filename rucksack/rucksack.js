@@ -321,7 +321,7 @@ var
             if (DEBUG) console.log(listener, "is listening for", module_key);
 
             // can link
-            if (_canLink(module_key, listener)) {
+            if (_canLink(listener, module_key)) {
 
                 // account dependency as available to module
                 _modules[listener].dependencies.link_count++;
