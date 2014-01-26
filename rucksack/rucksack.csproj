@@ -63,6 +63,7 @@
     <Content Include="README.html">
       <DependentUpon>README.md</DependentUpon>
     </Content>
+    <Content Include="rucksack.config.js" />
     <Content Include="rucksack.js" />
     <Content Include="rucksack.min.js">
       <DependentUpon>rucksack.js</DependentUpon>

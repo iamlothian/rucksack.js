@@ -22,6 +22,14 @@ var
     , _OBJECT_TYPE_REGEX = /^\[object(.*)\]$/
 
     // helpers
+    , _reset = function () {
+        if (DEBUG) {
+            _namespaces = {};
+            _modules = {};
+            _linkQueue = {};
+            _awaitQueue = _namespace(_awaitNameSpace, { sealed: true });
+        }
+    }
     // returns the an object type
     , _getObjectType = function (O) {
         return Object.prototype.toString.call(O).match(_OBJECT_TYPE_REGEX)[1].toLowerCase().replace(/ /g, '');
@@ -502,6 +510,7 @@ var
         $namespace: _namespace
       , $await: _await
       , $lock: _lock
+      , $reset: _reset
     };
 
     return _public;
