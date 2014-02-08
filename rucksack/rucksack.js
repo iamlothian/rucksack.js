@@ -28,6 +28,7 @@ var
             _modules = {};
             _linkQueue = {};
             _awaitQueue = _namespace(_awaitNameSpace, { sealed: true });
+            console.log("############## RESET ##############");
         }
     }
     // returns the an object type
