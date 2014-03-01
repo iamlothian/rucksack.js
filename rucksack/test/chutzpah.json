@@ -1,0 +1,17 @@
+﻿{
+    "Framework": "jasmine",
+
+	"FrameworkVersion": "1",
+
+	"RootReferencePathMode": "SettingsFileDirectory",
+    
+	"TestHarnessLocationMode": "SettingsFileAdjacent",
+
+    "EnableCodeCoverage": "true",
+
+    "References": [],
+
+	"Tests": [
+        { "Path": "rucksack.test.js"}
+    ]
+}

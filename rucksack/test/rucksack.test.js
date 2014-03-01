@@ -1,5 +1,6 @@
 ﻿/// <reference path="rucksack.test.config.js" />
-/// <reference path="../rucksack/rucksack.js" />
+/// <reference path="../rucksack.js" />
+
 
 describe("$rucksack", function () {
     it("exists", function () {
