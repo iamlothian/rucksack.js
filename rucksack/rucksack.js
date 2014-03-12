@@ -22,6 +22,15 @@ var
     , _OBJECT_TYPE_REGEX = /^\[object(.*)\]$/
 
     // helpers
+    , _reset = function () {
+        if (DEBUG) {
+            _namespaces = {};
+            _modules = {};
+            _linkQueue = {};
+            _awaitQueue = _namespace(_awaitNameSpace, { sealed: true });
+            console.log("############## RESET ##############");
+        }
+    }
     // returns the an object type
     , _getObjectType = function (O) {
         return Object.prototype.toString.call(O).match(_OBJECT_TYPE_REGEX)[1].toLowerCase().replace(/ /g, '');
@@ -321,7 +330,7 @@ var
             if (DEBUG) console.log(listener, "is listening for", module_key);
 
             // can link
-            if (_canLink(module_key, listener)) {
+            if (_canLink(listener, module_key)) {
 
                 // account dependency as available to module
                 _modules[listener].dependencies.link_count++;
@@ -502,6 +511,7 @@ var
         $namespace: _namespace
       , $await: _await
       , $lock: _lock
+      , $reset: _reset
     };
 
     return _public;

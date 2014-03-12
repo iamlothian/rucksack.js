@@ -14,7 +14,7 @@
     <RootNamespace>rucksack</RootNamespace>
     <AssemblyName>rucksack</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -63,10 +63,43 @@
     <Content Include="README.html">
       <DependentUpon>README.md</DependentUpon>
     </Content>
+    <Content Include="test\rucksack.test.config.js" />
     <Content Include="rucksack.js" />
+    <Content Include="rucksack.min.js">
+      <DependentUpon>rucksack.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="rucksack.min.js.map">
+      <DependentUpon>rucksack.js</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test\css\jasmine.css" />
+    <Content Include="test\includes\blanket_jasmine_v1.js" />
+    <Content Include="test\includes\jasmine-ddescribe-iit.js" />
+    <Content Include="test\includes\jasmine-html.js" />
+    <Content Include="test\includes\jasmine.js" />
+    <Content Include="test\jasmine-harness-template.html" />
+    <Content Include="test\jasmine-harness.html" />
+    <Content Include="test\rucksack.test.js" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test\chutzpah.json" />
+    <Content Include="test\README.md" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -83,7 +116,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62502</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:62502/</IISUrl>
+          <IISUrl>http://rucksack.localhost/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
