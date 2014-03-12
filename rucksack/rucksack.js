@@ -1,4 +1,4 @@
-﻿
+﻿// test comment
 var
  $RSConfig = !!$RSConfig ? $RSConfig : {}
 , $rucksack = $rucksack || (function (config) {
