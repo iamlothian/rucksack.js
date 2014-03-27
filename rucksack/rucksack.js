@@ -13,10 +13,15 @@ var
     , _modules = {}
     , _linkQueue = {}
     // REGEX
-    , _KEY_REGEX = /([a-zA-Z]+\d*[\.\_]?)+?[a-zA-Z\d]/
-    , _NAMESPACE_REGEX = /[a-zA-Z]+\d*:/
-    , _MODULE_KEY_REGEX = new RegExp(_NAMESPACE_REGEX.source + _KEY_REGEX.source, "g")
-    , _INTERFACE_REGEX = new RegExp(_MODULE_KEY_REGEX.source + "( as )" + _MODULE_KEY_REGEX.source)
+    , _KEY_REGEX = /[a-zA-Z]+\d*/
+    , _KEY_SEPORATORS = /[\.\_]/
+    , _NAMESPAC_PREFIX_OPT = /[\$\_]?/
+    , _KEY_REGEX_CHAIN = new RegExp("(" + _KEY_REGEX.source + ")(" + _KEY_SEPORATORS.source + "?[" + _KEY_REGEX.source + ")+", "")
+    , _KEY_REGEX_CHAIN_ONLY = new RegExp("^" + _KEY_REGEX_CHAIN.source + "$", "")
+    , _NAMESPACE_REGEX = new RegExp("^" + _NAMESPAC_PREFIX_OPT.source + _KEY_REGEX_CHAIN.source + "$", "")
+    , _MODULE_KEY_REGEX = new RegExp(_NAMESPAC_PREFIX_OPT.source + _KEY_REGEX_CHAIN.source + ":" + _KEY_REGEX_CHAIN.source, "")
+    , _MODULE_KEY_REGEX_ONLY = new RegExp("^" + _MODULE_KEY_REGEX.source + "$", "")
+    , _INTERFACE_REGEX = new RegExp("^" + _MODULE_KEY_REGEX.source + "( as )" + _MODULE_KEY_REGEX.source + "$")
     , _FUNCTION_ARGS_REGEX = /\(([^)]+)/
     , _FUNCTION_ARGS_SPLIT_REGEX = /\s*,\s*/
     , _OBJECT_TYPE_REGEX = /^\[object(.*)\]$/
@@ -68,7 +73,7 @@ var
                 console.log(dependencies[key]);
 
                 var
-                   parts = dependencies[key].match(_MODULE_KEY_REGEX)
+                   parts = dependencies[key].match(_MODULE_KEY_REGEX_ONLY)
                   , module_key = parts[0]
                   , interface_key = parts[1];
 
@@ -359,6 +364,9 @@ var
     // rucksack namespace interface
     , _namespace = function (namespace, options) {
 
+        if (!_NAMESPACE_REGEX.test(namespace))
+            throw new Error(" Invalid Namespace Key [" + namespace + "] must match regex " + _NAMESPACE_REGEX.toString());
+
         if (DEBUG) console.log("Add namespace: ", namespace, options);
 
         if (!!_namespaces[namespace])
@@ -504,7 +512,7 @@ var
         return _public;
     }
     // internal await namespace variables
-    , _awaitNameSpace = "_AWAIT"
+    , _awaitNameSpace = "$AWAIT"
     , _awaitQueue = _namespace(_awaitNameSpace, { seal: true })
     // public
     , _public = {

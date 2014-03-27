@@ -25,6 +25,18 @@ describe("$rucksack.$namespace", function () {
         app = $rucksack.$namespace("APP");
         expect(!!app).toBe(true);
     });
+    it("can create new a namespace with a '$' or '_' prefix", function () {
+        expect(!!$rucksack.$namespace("$APP")).toBe(true);
+        expect(!!$rucksack.$namespace("_APP")).toBe(true);
+    });
+    it("will validate correct name conventions", function () {
+        var error = function () { $rucksack.$namespace("APP."); }
+        expect(error).toThrow()
+    });
+    it("can create new a namespace width '.' seporator", function () {
+        app = $rucksack.$namespace("APP.Sub1.Sub2");
+        expect(!!app).toBe(true);
+    });
     it("can create new a sealed namespace", function () {
         app = $rucksack.$namespace("APP", { sealed:true });
         expect(!!app).toBe(true);
