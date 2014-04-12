@@ -1,4 +1,4 @@
-﻿// test comment
+﻿// version 0.2.0
 var
  $RSConfig = !!$RSConfig ? $RSConfig : {}
 , $rucksack = $rucksack || (function (config) {
@@ -408,8 +408,6 @@ var
                       , $datetime: new Date().toLocaleString()
                       , $ruckackScope: {
                           module: me
-                        , descriptor: !!_namespaces[namespace][me.key] ?
-                          _namespaces[namespace][me.key].descriptor : NOT_SUPPORTED
                       }
                     };
 
@@ -456,45 +454,6 @@ var
             _proccess(_awaitNameSpace, module_key, constructor, "await", options);
         }
         // -------------------------------------------------------
-        // DEPRICATED: Not useful, mostly falls outside the life cycle of the rucksack framework
-        // -------------------------------------------------------
-        , _tryGet = function (module_key) {
-
-            if (!!!_namespaces[namespace][module_key])
-                throw new Error("Reference Exception: Module [" + module_key + "] is not found in namespace [" + namespace + "]");
-
-            var
-             module = _modules[module_key]
-            , result = null;
-
-            switch (_moduleState(module)) {
-                case "undefined":
-                    throw new Error("Reference Exception: Module [" + module_key + "] is not yet defined");
-                case "linking":
-                    result = _resolve(module);
-                    break;
-                case "compiled":
-                    result = module;
-                    break;
-            }
-
-            return result;
-
-        }
-        // -------------------------------------------------------
-        // also available as an option on a module. Describe is intended as an 
-        // option method of internal documentation for debugging and describing you modules
-        // -------------------------------------------------------
-        , _describe = function (module_key, description) {
-            if (!!module_key) {
-                if (!!description && !!!_namespaces[namespace][module_key].descriptor)
-                    _namespaces[namespace][module_key].descriptor = description;
-                return _namespaces[namespace][module_key].descriptor;
-            } else {
-                // TODO: show all descriptions for name space
-            }
-        }
-        // -------------------------------------------------------
         // freezes the state of this namespace and stops additions
         // -------------------------------------------------------
         , _freeze = function () {
@@ -505,8 +464,6 @@ var
           , $factory: _factory
           , $interface: _interface
           , $await: _await
-            //,$get:        _tryGet // DEPRICATED
-          , $describe: _describe
           , $freeze: _freeze
         };
         return _public;
