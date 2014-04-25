@@ -60,22 +60,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="release\rucksack-0.0.1.js" />
+    <Content Include="Rucksack 0.0.2 Spec.js" />
     <Content Include="README.html">
       <DependentUpon>README.md</DependentUpon>
     </Content>
     <Content Include="test\rucksack.test.config.js" />
     <Content Include="rucksack.js" />
-    <Content Include="rucksack.min.js">
-      <DependentUpon>rucksack.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="rucksack.min.js.map">
-      <DependentUpon>rucksack.js</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="test\css\jasmine.css" />
@@ -86,21 +80,15 @@
     <Content Include="test\jasmine-harness-template.html" />
     <Content Include="test\jasmine-harness.html" />
     <Content Include="test\rucksack.test.js" />
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="test\chutzpah.json" />
     <Content Include="test\README.md" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

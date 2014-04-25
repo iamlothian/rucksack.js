@@ -1,4 +1,4 @@
-﻿// version 0.2.0
+﻿// version 0.0.1
 var
  $RSConfig = !!$RSConfig ? $RSConfig : {}
 , $rucksack = $rucksack || (function (config) {
@@ -26,7 +26,6 @@ var
     , _FUNCTION_ARGS_SPLIT_REGEX = /\s*,\s*/
     , _OBJECT_TYPE_REGEX = /^\[object(.*)\]$/
 
-    // TODO: Move to debug version
     // helpers
     , _reset = function () {
         if (DEBUG) {
@@ -42,11 +41,9 @@ var
         return Object.prototype.toString.call(O).match(_OBJECT_TYPE_REGEX)[1].toLowerCase().replace(/ /g, '');
     }
     // returns the argument list of a function constructor
-    // TODO: May not be used
     , _getFunctionArgs = function (F) {
         return F.toString().match(_FUNCTION_ARGS_REGEX)[1].split(_FUNCTION_ARGS_SPLIT_REGEX);
     }
-    // TODO: ... 
     // returns the sate of a module
     , _moduleState = function (module) {
         var state = "";
@@ -55,14 +52,13 @@ var
         else if (!!module) state = "compiled";
         return state;
     }
-    // validate module key and prepped namespace if needed
+    // validate module key and perpend namespace if needed
     , _namespaceKey = function (namespace, key) {
         if (!_KEY_REGEX.test(key))
             throw new Error(" Invalid module Key [" + key + "] must regex " + _KEY_REGEX.toString());
 
         return key.indexOf(namespace) === 0 ? key : (namespace + ':' + key);
     }
-    // TODO: Check if this is needed for current spec
     // break apart dependency list into its usable parts
     , _proccessDependencies = function (constructor) {
 
@@ -97,7 +93,7 @@ var
           , link_interfaces: interfaces
         }
     }
-    // is a module compliable
+    // is a module compilable
     , _canCompile = function (module) {
         return module.dependencies.link_count == module.dependencies.link_keys.length;
     }
@@ -150,9 +146,6 @@ var
         return ijct;
 
     }
-
-    //#region DEPRICATED
-    /*
     // compare a function constructor to a validation object
     // returns an index of an argument if the comparison fails
     // else true or a compiled function constructor
@@ -236,10 +229,6 @@ var
         return true
 
     }
-    */
-    //#endregion
-
-    // TODO: change the way this is stored
     // build the link state from a module constructor ready for registering
     , _constructorParts = function (namespace, constructor, type, key) {
         return {
@@ -250,8 +239,6 @@ var
           , builder: constructor[constructor.length - 1]
         };
     }
-
-
     // life cycle
     , _register = function () {
 
@@ -404,10 +391,10 @@ var
                 me = _constructorParts(namespace, constructor, type, module_key);
                 _namespaces[namespace][me.key] = options || {};
                 _register.call(me);
-
             } catch (err) {
 
                 if (!!ERROR_CALLBACK) {
+
 
                     // add scope data
                     var
@@ -433,21 +420,51 @@ var
                 throw err;
             }
         }
-
-        , _value = function (module_key, value) {
-
+        // -------------------------------------------------------
+        // a module with a static like intent, built around the this object 
+        // -------------------------------------------------------
+        // Injectable
+        , _service = function (module_key, constructor, options) {
+            _proccess(namespace, module_key, constructor, "service", options);
+            return _public;
         }
-
-        , _class = function (module_key, constructor) {
-
+        // -------------------------------------------------------
+        // a module with an instanciable like intent, built around the return object 
+        // -------------------------------------------------------
+        // Injectable
+        , _factory = function (module_key, constructor, options) {
+            _proccess(namespace, module_key, constructor, "factory", options);
+            return _public;
         }
-
-        , _define = function (module_key, constructor) {
-
+        // -------------------------------------------------------
+        // a module with an abstract like intent, used to describe 
+        // and validate the expected properties injected modules.
+        // -------------------------------------------------------
+        // Not Injectable
+        , _interface = function (module_key, definition) {
+            _proccess(namespace, module_key, [function () { return definition; }], "interface", { abstract: true, seal: true });
+            return _public;
         }
-
+        // -------------------------------------------------------
+        // a listener module intended to be used to wait for dependencies to be resolved before use
+        // unlike other modules no constructor is compiled, only a true value if the await is resolved
+        // -------------------------------------------------------
+        // Injectable but sealed
+        , _await = function (module_key, constructor) {
+            _proccess(_awaitNameSpace, module_key, constructor, "await", options);
+        }
+        // -------------------------------------------------------
+        // freezes the state of this namespace and stops additions
+        // -------------------------------------------------------
+        , _freeze = function () {
+            _namespaces[namespace]._options.frozen = true;
+        }
         , _public = {
-
+            $service: _service
+          , $factory: _factory
+          , $interface: _interface
+          , $await: _await
+          , $freeze: _freeze
         };
         return _public;
     }
