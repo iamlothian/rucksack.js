@@ -7,7 +7,7 @@ This repository is split into two project folders set up to run in Visual Studio
 The test project is set up to run using:
 
 * http://chutzpah.codeplex.com/
-* http://pivotal.github.io/jasmine/
+* https://jasmine.github.io/
 
 ## What is it?
 
